@@ -1,0 +1,25 @@
+{
+  "name": "tab-accordion",
+  "version": "1.0.0",
+  "description": "Easy to use tabs and accordions",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SketchBookkeeper/tab-accordion-js.git"
+  },
+  "author": "Paul Allen",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/SketchBookkeeper/tab-accordion-js/issues"
+  },
+  "homepage": "https://github.com/SketchBookkeeper/tab-accordion-js#readme",
+  "dependencies": {
+    "lodash": "^4.17.10"
+  }
+}
