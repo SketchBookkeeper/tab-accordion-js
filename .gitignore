@@ -2,6 +2,7 @@
 *.css.map
 
 /node_modules
+/dist
 
 *.7z
 *._*
