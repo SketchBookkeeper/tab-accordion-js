@@ -50,8 +50,6 @@ const Tabby = (function () {
       }
     }
 
-    // TODO Make setup aria function
-
     // Handle clicks
     function bindClickEvents (groupName) {
       window.addEventListener('click', e => {
@@ -108,6 +106,7 @@ const Tabby = (function () {
     // Prepare the accordion view.
     function setUpAccordionView () {
       publicAPIs.closeAll()
+      addAccordionAria()
 
       if (settings.hideTabs) {
         toggleTriggers('tab', 'none')
@@ -122,6 +121,7 @@ const Tabby = (function () {
     // Get the first tab and open it.
     function setUpTabs () {
       publicAPIs.closeAll()
+      addTabAria()
 
       const firstTab = Object.keys(publicAPIs.items['tab'])[0]
 
@@ -177,6 +177,26 @@ const Tabby = (function () {
       })
 
       return sorteditems
+    }
+
+    // Accordion Aria labels
+    function addAccordionAria () {
+      forOwn(publicAPIs.items['accordion'], function (value, key) {
+        value.el.setAttribute('aria-controls', value.panel.id)
+      })
+    }
+
+    // Tab Aria labels
+    function addTabAria () {
+      forOwn(publicAPIs.items['tab'], function (value, key) {
+        const panelId = value.panel.id
+
+        value.el.setAttribute('aria-controls', panelId)
+        value.el.id = `${panelId}-tab`
+
+        value.panel.setAttribute('role', 'tabpanel')
+        value.panel.setAttribute('aria-labeledby', `${panelId}-tab`)
+      })
     }
 
     // Open the panel and give the trigger the needed attributes
