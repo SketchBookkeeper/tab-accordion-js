@@ -12,6 +12,8 @@ const Tabby = (function () {
     activeContentClass: 'active',
     deepLinking: true,
     hidePanels: true,
+    hideTabs: true,
+    hideAccordions: true,
     breakpoint: 960,
     type: false
   }
@@ -21,25 +23,30 @@ const Tabby = (function () {
     let publicAPIs = {}
     let settings
 
-    // Check if user defined a type 'accordion' or 'type'
+    // Check if user defined a type 'accordion' or 'tab'
     // Otherwise set the value.
     let currentView = options.type || 'accordion'
 
     // Private Methods
     function runTabby (groupName, options) {
-      publicAPIs.items = sortItems(collectitems(groupName))
+      publicAPIs.items = sortItems(collectItems(groupName))
       bindClickEvents(groupName)
 
       // if user defines a type don't check sizes
       if (!options.type) {
         checkView()
-
         bindResizeEvents()
       }
 
       // Hide panels for the user
       if (options.hidePanels) {
         publicAPIs.closeAll()
+      }
+
+      setView()
+
+      if (options.deepLinking) {
+        checkForHashOnLoad()
       }
     }
 
@@ -51,7 +58,13 @@ const Tabby = (function () {
         const el = e.target.closest(`[data-tabby-group="${groupName}"]`)
         if (!el) return
 
-        publicAPIs.open(el.dataset.tabbyPanel)
+        const panelName = el.dataset.tabbyPanel
+
+        publicAPIs.open(panelName)
+
+        if (settings.deepLinking) {
+          window.location.hash = panelName
+        }
       })
     }
 
@@ -64,7 +77,15 @@ const Tabby = (function () {
         if (previousView !== currentView) {
           setView()
         }
-      }, 300))
+      }, 100))
+    }
+
+    function checkForHashOnLoad () {
+      if (window.location.hash) {
+        const maybePanelName = window.location.hash.replace('#', '')
+
+        publicAPIs.open(maybePanelName)
+      }
     }
 
     // Check the viewport and determine if current view should be tabs or accordions
@@ -87,6 +108,14 @@ const Tabby = (function () {
     // Prepare the accordion view.
     function setUpAccordionView () {
       publicAPIs.closeAll()
+
+      if (settings.hideTabs) {
+        toggleTriggers('tab', 'none')
+      }
+
+      if (settings.hideAccordions) {
+        toggleTriggers('accordion', 'block')
+      }
     }
 
     // Prepare the tab view
@@ -97,9 +126,24 @@ const Tabby = (function () {
       const firstTab = Object.keys(publicAPIs.items['tab'])[0]
 
       open(firstTab, 'tab')
+
+      if (settings.hideTabs) {
+        toggleTriggers('tab', 'block')
+      }
+
+      if (settings.hideAccordions) {
+        toggleTriggers('accordion', 'none')
+      }
     }
 
-    function collectitems (groupName) {
+    // Toggle the tiggers' display based on passed display value
+    function toggleTriggers (type, displayValue) {
+      forOwn(publicAPIs.items[type], function (value, key) {
+        value.el.style.display = displayValue
+      })
+    }
+
+    function collectItems (groupName) {
       return [...document.querySelectorAll(`[data-tabby-group="${groupName}"]`)]
     }
 
@@ -162,14 +206,15 @@ const Tabby = (function () {
 
       // Open the Panel
       panelElement.classList.add(settings.activeContentClass)
+
+      // Update the API
+      publicAPIs.active = panelName
+
       // Developer may choose to use active class to display panel,
       // rather than let the plugin set the display.
       if (settings.hidePanels) {
         panelElement.style.display = 'block'
       }
-
-      // Update the API
-      publicAPIs.active = panelName
     }
 
     // Close the panel and unset the trigger
@@ -196,6 +241,7 @@ const Tabby = (function () {
     publicAPIs.active = null
     publicAPIs.items = []
 
+    // Open
     publicAPIs.open = function (panelName) {
       if (publicAPIs.active) {
         close(publicAPIs.active, currentView)
@@ -204,10 +250,12 @@ const Tabby = (function () {
       open(panelName, currentView)
     }
 
+    // Close
     publicAPIs.close = function (panelName) {
       close(panelName, currentView)
     }
 
+    // Close 'em all
     publicAPIs.closeAll = function () {
       views.forEach(view => {
         forOwn(publicAPIs.items[view], function (value, key) {
@@ -218,7 +266,10 @@ const Tabby = (function () {
 
     publicAPIs.init = function (groupName, options) {
       settings = merge(defaults, options || {})
-      runTabby(groupName, settings)
+
+      window.addEventListener('load', e => {
+        runTabby(groupName, settings)
+      })
     }
 
     publicAPIs.init(groupName, options)
