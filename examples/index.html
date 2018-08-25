@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>Tabby Test Page</title>
+</head>
+
+<body>
+
+  <div class="container mt-4">
+    <ul class="nav nav-tabs d-none d-lg-flex">
+      <li class="nav-item">
+        <button data-tabby-panel="tab-1" data-tabby-group="group-1" class="nav-link">Tab 1</button>
+      </li>
+
+      <li class="nav-item">
+        <button data-tabby-panel="tab-2" data-tabby-group="group-1" class="nav-link">Tab 2</button>
+      </li>
+
+      <li class="nav-item">
+        <button data-tabby-panel="tab-3" data-tabby-group="group-1" class="nav-link">Tab 3</button>
+      </li>
+    </ul>
+
+    <div>
+      <button class="card d-lg-none" data-tabby-panel="tab-1" data-tabby-group="group-1">Tab 1</button>
+
+      <div id="tab-1">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+
+      <button class="card d-lg-none" data-tabby-panel="tab-2" data-tabby-group="group-1">Tab 1</button>
+
+      <div id="tab-2">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </div>
+
+      <button class="card d-lg-none" data-tabby-panel="tab-3" data-tabby-group="group-1">Tab 1</button>
+
+      <div id="tab-3">
+        <p>
+          TAB 3
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./../src/index.js"></script>
+</body>
+
+</html>

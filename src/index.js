@@ -1,45 +1,70 @@
 import merge from 'lodash/merge'
 import debounce from 'lodash/debounce'
+import forOwn from 'lodash/forOwn'
 import upperFirst from 'lodash/upperFirst'
 
 /**
  * Tabby
  */
-export const Tabby = (function () {
+const Tabby = (function () {
   let defaults = {
-    activeTriggerClass: 'is-active',
-    activeContentClass: 'is-active',
+    activeTriggerClass: 'active',
+    activeContentClass: 'active',
     deepLinking: true,
     hidePanels: true,
-    breakpoint: 960
+    breakpoint: 960,
+    type: false
   }
 
   const BuildTabby = function (groupName, options) {
+    const views = ['tab', 'accordion']
     let publicAPIs = {}
     let settings
-    let currentView = 'accordion' // tab || accordion
+
+    // Check if user defined a type 'accordion' or 'type'
+    // Otherwise set the value.
+    let currentView = options.type || 'accordion'
 
     // Private Methods
     function runTabby (groupName, options) {
-      publicAPIs.triggers = sortTriggers(collectTriggers(groupName))
-      checkView()
-      bindEvents(groupName)
+      publicAPIs.items = sortItems(collectitems(groupName))
+      bindClickEvents(groupName)
+
+      // if user defines a type don't check sizes
+      if (!options.type) {
+        checkView()
+
+        bindResizeEvents()
+      }
+
+      // Hide panels for the user
+      if (options.hidePanels) {
+        publicAPIs.closeAll()
+      }
     }
 
     // TODO Make setup aria function
 
-    // Add all the needed event listeners
-    function bindEvents (groupName) {
-      // Click Events
+    // Handle clicks
+    function bindClickEvents (groupName) {
       window.addEventListener('click', e => {
         const el = e.target.closest(`[data-tabby-group="${groupName}"]`)
         if (!el) return
 
         publicAPIs.open(el.dataset.tabbyPanel)
       })
+    }
 
-      // Resize
-      // window.addEventListener('resize', );
+    // Add resize event handing
+    function bindResizeEvents () {
+      window.addEventListener('resize', debounce(() => {
+        const previousView = currentView
+        checkView()
+
+        if (previousView !== currentView) {
+          setView()
+        }
+      }, 300))
     }
 
     // Check the viewport and determine if current view should be tabs or accordions
@@ -51,53 +76,79 @@ export const Tabby = (function () {
       }
     }
 
-    function collectTriggers (groupName) {
+    function setView () {
+      if (currentView === 'accordion') {
+        setUpAccordionView()
+      } else {
+        setUpTabs()
+      }
+    }
+
+    // Prepare the accordion view.
+    function setUpAccordionView () {
+      publicAPIs.closeAll()
+    }
+
+    // Prepare the tab view
+    // Get the first tab and open it.
+    function setUpTabs () {
+      publicAPIs.closeAll()
+
+      const firstTab = Object.keys(publicAPIs.items['tab'])[0]
+
+      open(firstTab, 'tab')
+    }
+
+    function collectitems (groupName) {
       return [...document.querySelectorAll(`[data-tabby-group="${groupName}"]`)]
     }
 
-    // Sort and cache the triggers into types, tab or accordion.
+    // Sort and cache the items into types, tab or accordion.
     // Function will assume the elements found in the DOM first are tabs,
-    // followed by accordion triggers.
+    // followed by accordion items.
     // This behavior can be changed by providing a type on the trigger element
     // i.e. data-tabby-trigger-type="accordion"
-    function sortTriggers (triggers) {
-      const sortedTriggers = {
+    function sortItems (items) {
+      const sorteditems = {
         tab: {},
         accordion: {}
       }
 
-      triggers.forEach(trigger => {
+      items.forEach(trigger => {
         let group = 'tab' // Group name
         const panelName = trigger.dataset.tabbyPanel
 
         // Sort to accordion if tab for panel is already present
-        if (sortedTriggers.tab.hasOwnProperty(panelName)) group = 'accordion'
+        if (sorteditems.tab.hasOwnProperty(panelName)) group = 'accordion'
+
         // Allow Developer to override for unique layouts
         if (trigger.dataset.tabbyTriggerType) {
           group = trigger.dataset.tabbyTriggerType
         }
 
-        sortedTriggers[group][panelName] = {
+        sorteditems[group][panelName] = {
           el: trigger,
           panel: document.getElementById(panelName)
         }
       })
 
-      return sortedTriggers
+      return sorteditems
     }
 
     // Open the panel and give the trigger the needed attributes
     function open (panelName, type) {
+      if (!panelName) return
+
       // Check if we have valid parameters
       if (
-        !publicAPIs.triggers[type].hasOwnProperty(panelName) ||
-        !publicAPIs.triggers[type][panelName].hasOwnProperty('el') ||
-        !publicAPIs.triggers[type][panelName].hasOwnProperty('panel')
+        !publicAPIs.items[type].hasOwnProperty(panelName) ||
+        !publicAPIs.items[type][panelName].hasOwnProperty('el') ||
+        !publicAPIs.items[type][panelName].hasOwnProperty('panel')
       ) {
         return
       }
 
-      const panelObject = publicAPIs.triggers[type][panelName]
+      const panelObject = publicAPIs.items[type][panelName]
       const triggerElement = panelObject.el
       const panelElement = panelObject.panel
 
@@ -118,20 +169,52 @@ export const Tabby = (function () {
       }
 
       // Update the API
-      publicAPIs.active = panelObject
+      publicAPIs.active = panelName
+    }
+
+    // Close the panel and unset the trigger
+    function close (panelName, type) {
+      const panelObject = publicAPIs.items[type][panelName]
+      const triggerElement = panelObject.el
+      const panelElement = panelObject.panel
+
+      const ariaSelected = type === 'tab' ? 'aria-selected' : 'aria-expanded'
+
+      triggerElement.classList.remove(settings.activeTriggerClass)
+      triggerElement.setAttribute(ariaSelected, false)
+
+      if (settings.hidePanels) {
+        panelElement.style.display = 'none'
+      }
+
+      publicAPIs.active = null
     }
 
     // PublicAPIs
 
     // Set defaults
-    publicAPIs.active = {}
-    publicAPIs.triggers = []
+    publicAPIs.active = null
+    publicAPIs.items = []
 
     publicAPIs.open = function (panelName) {
+      if (publicAPIs.active) {
+        close(publicAPIs.active, currentView)
+      }
+
       open(panelName, currentView)
     }
 
-    publicAPIs.close = function (panelName) {}
+    publicAPIs.close = function (panelName) {
+      close(panelName, currentView)
+    }
+
+    publicAPIs.closeAll = function () {
+      views.forEach(view => {
+        forOwn(publicAPIs.items[view], function (value, key) {
+          close(key, view)
+        })
+      })
+    }
 
     publicAPIs.init = function (groupName, options) {
       settings = merge(defaults, options || {})
@@ -155,9 +238,9 @@ export const TabbyCats = (function () {
 
     // Private Methods
     function runTabbyCats () {
-      const allTriggers = [...document.querySelectorAll('[data-tabby-group]')]
+      const allItems = [...document.querySelectorAll('[data-tabby-group]')]
 
-      allTriggers.forEach(trigger => {
+      allItems.forEach(trigger => {
         const groupName = trigger.dataset.tabbyGroup
 
         // Check if trigger is option is not empty
