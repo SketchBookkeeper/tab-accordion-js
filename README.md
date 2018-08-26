@@ -73,7 +73,7 @@ Pass the options as JSON to `data-tabby-group-<your-group-name>`. It doesn't mat
 Review the example below, notice the use of single quotes.
 
 ```html
-<ul data-tabby-group-my-tabs='{ breakpoint: 1040 }'>
+<ul data-tabby-group-my-tabs='{ "breakpoint" : 1040 }'>
   <il>
     <button data-tabby-panel="some-panel" data-tabby-group="my-tabs">Trigger</button>
   </il>
