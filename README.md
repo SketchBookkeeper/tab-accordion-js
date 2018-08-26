@@ -77,8 +77,6 @@ Review the example below, notice the use of single quotes.
   <il>
     <button data-tabby-panel="some-panel" data-tabby-group="my-tabs">Trigger</button>
   </il>
-
-  ....
 </ul>
 ```
 
