@@ -6,7 +6,7 @@ import upperFirst from 'lodash/upperFirst'
 /**
  * Tabby
  */
-const Tabby = (function () {
+const TabbyAccordion = (function () {
   let defaults = {
     activeTriggerClass: 'active',
     activeContentClass: 'active',
@@ -303,7 +303,7 @@ const Tabby = (function () {
 /**
  * Search the DOM for all the instances of Tabs
  */
-export const TabbyCats = (function () {
+export const TabbyAccordions = (function () {
   const BuildTabbyCats = function () {
     let publicAPIs = {}
 
@@ -367,4 +367,5 @@ export const TabbyCats = (function () {
   return BuildTabbyCats
 })(window, document)
 
-window.tabbyCatTabs = new TabbyCats()
+exports.TabbyAccordion = TabbyAccordion
+exports.TabbyAccordions = TabbyAccordions

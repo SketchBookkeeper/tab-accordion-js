@@ -1,11 +1,8 @@
 {
-  "name": "tab-accordion",
+  "name": "tab-accordion-js",
   "version": "1.0.0",
   "description": "Easy to use tabs and accordions",
   "main": "src/index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "dev": "parcel examples/index.html",
     "watch": "parcel watch src/index.js",
