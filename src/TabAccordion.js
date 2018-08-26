@@ -17,7 +17,7 @@ export const TabAccordion = (function () {
     type: false
   }
 
-  const BuildTabby = function (groupName, options) {
+  const BuildTabs = function (groupName, options) {
     const views = ['tab', 'accordion']
     let publicAPIs = {}
     let settings
@@ -27,7 +27,7 @@ export const TabAccordion = (function () {
     let currentView = options.type || 'accordion'
 
     // Private Methods
-    function runTabby (groupName, options) {
+    function runTabs (groupName, options) {
       publicAPIs.items = sortItems(collectItems(groupName))
       bindClickEvents(groupName)
 
@@ -289,7 +289,7 @@ export const TabAccordion = (function () {
       settings = merge(defaults, options || {})
 
       window.addEventListener('load', e => {
-        runTabby(groupName, settings)
+        runTabs(groupName, settings)
       })
     }
 
@@ -298,5 +298,5 @@ export const TabAccordion = (function () {
     return publicAPIs
   }
 
-  return BuildTabby
+  return BuildTabs
 })(window, document)

@@ -5,11 +5,11 @@ import { TabAccordion } from './TabAccordion'
  * Tab Accordions
  */
 export const TabAccordions = (function () {
-  const BuildTabbyCats = function () {
+  const BuildTabs = function () {
     let publicAPIs = {}
 
     // Private Methods
-    function runTabbyCats () {
+    function runTabs () {
       // Search the DOM for all the instances of Tabs
       const allItems = [...document.querySelectorAll('[data-tabby-group]')]
 
@@ -61,7 +61,7 @@ export const TabAccordions = (function () {
     }
 
     publicAPIs.init = function () {
-      runTabbyCats()
+      runTabs()
     }
 
     publicAPIs.init()
@@ -69,5 +69,5 @@ export const TabAccordions = (function () {
     return publicAPIs
   }
 
-  return BuildTabbyCats
+  return BuildTabs
 })(window, document)
