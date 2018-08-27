@@ -42,7 +42,7 @@ export const TabAccordion = (function () {
         publicAPIs.closeAll()
       }
 
-      setView()
+      setView() // init tabs or accordions
 
       if (options.deepLinking) {
         checkForHashOnLoad()
@@ -77,6 +77,7 @@ export const TabAccordion = (function () {
       }, 100))
     }
 
+    // Deeplinking on load
     function checkForHashOnLoad () {
       if (window.location.hash) {
         const maybePanelName = window.location.hash.replace('#', '')
@@ -152,7 +153,7 @@ export const TabAccordion = (function () {
     // This behavior can be changed by providing a type on the trigger element
     // i.e. data-tab-trigger-type="accordion"
     function sortItems (items) {
-      const sorteditems = {
+      const sortedItems = {
         tab: {},
         accordion: {}
       }
@@ -162,20 +163,20 @@ export const TabAccordion = (function () {
         const panelName = trigger.dataset.tabPanel
 
         // Sort to accordion if tab for panel is already present
-        if (sorteditems.tab.hasOwnProperty(panelName)) group = 'accordion'
+        if (sortedItems.tab.hasOwnProperty(panelName)) group = 'accordion'
 
         // Allow Developer to override for unique layouts
         if (trigger.dataset.tabTriggerType) {
           group = trigger.dataset.tabTriggerType
         }
 
-        sorteditems[group][panelName] = {
+        sortedItems[group][panelName] = {
           el: trigger,
           panel: document.getElementById(panelName)
         }
       })
 
-      return sorteditems
+      return sortedItems
     }
 
     // Accordion Aria labels

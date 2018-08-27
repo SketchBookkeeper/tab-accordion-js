@@ -4,4 +4,4 @@ import { TabAccordions } from './TabAccordions'
 exports.TabAccordion = TabAccordion
 exports.TabAccordions = TabAccordions
 
-new TabAccordions()
+new TabAccordions() // TODO remove, for testing
