@@ -52,10 +52,10 @@ export const TabAccordion = (function () {
     // Handle clicks
     function bindClickEvents (groupName) {
       window.addEventListener('click', e => {
-        const el = e.target.closest(`[data-tabby-group="${groupName}"]`)
+        const el = e.target.closest(`[data-tab-group="${groupName}"]`)
         if (!el) return
 
-        const panelName = el.dataset.tabbyPanel
+        const panelName = el.dataset.tabPanel
 
         publicAPIs.open(panelName)
 
@@ -143,14 +143,14 @@ export const TabAccordion = (function () {
     }
 
     function collectItems (groupName) {
-      return [...document.querySelectorAll(`[data-tabby-group="${groupName}"]`)]
+      return [...document.querySelectorAll(`[data-tab-group="${groupName}"]`)]
     }
 
     // Sort and cache the items into types, tab or accordion.
     // Function will assume the elements found in the DOM first are tabs,
     // followed by accordion items.
     // This behavior can be changed by providing a type on the trigger element
-    // i.e. data-tabby-trigger-type="accordion"
+    // i.e. data-tab-trigger-type="accordion"
     function sortItems (items) {
       const sorteditems = {
         tab: {},
@@ -159,14 +159,14 @@ export const TabAccordion = (function () {
 
       items.forEach(trigger => {
         let group = 'tab' // Group name
-        const panelName = trigger.dataset.tabbyPanel
+        const panelName = trigger.dataset.tabPanel
 
         // Sort to accordion if tab for panel is already present
         if (sorteditems.tab.hasOwnProperty(panelName)) group = 'accordion'
 
         // Allow Developer to override for unique layouts
-        if (trigger.dataset.tabbyTriggerType) {
-          group = trigger.dataset.tabbyTriggerType
+        if (trigger.dataset.tabTriggerType) {
+          group = trigger.dataset.tabTriggerType
         }
 
         sorteditems[group][panelName] = {

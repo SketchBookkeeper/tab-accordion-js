@@ -11,10 +11,10 @@ export const TabAccordions = (function () {
     // Private Methods
     function runTabs () {
       // Search the DOM for all the instances of Tabs
-      const allItems = [...document.querySelectorAll('[data-tabby-group]')]
+      const allItems = [...document.querySelectorAll('[data-tab-group]')]
 
       allItems.forEach(trigger => {
-        const groupName = trigger.dataset.tabbyGroup
+        const groupName = trigger.dataset.tabGroup
 
         // Check if trigger is option is not empty
         // And the it's not already included in the tabs groups object
@@ -33,13 +33,13 @@ export const TabAccordions = (function () {
     // Extract those setting if it's valid JSON.
     function getSettings (groupName) {
       const settingsElement = document.querySelector(
-        `[data-tabby-group-${groupName}]`
+        `[data-tab-group-${groupName}]`
       )
 
       if (!settingsElement) return {}
 
       const settings =
-        settingsElement.dataset[`tabbyGroup${upperFirst(groupName)}`]
+        settingsElement.dataset[`tabGroup${upperFirst(groupName)}`]
 
       try {
         JSON.parse(settings)

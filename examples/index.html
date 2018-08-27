@@ -6,28 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <title>Tabby Test Page</title>
+  <title>Tab Test Page</title>
 </head>
 
 <body>
 
-  <div class="container mt-4">
+  <div class="container mt-4" data-tab-group-group-1='{ "breakpoint": 1000 }'>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <button data-tabby-panel="tab-1" data-tabby-group="group-1" class="nav-link">Tab 1</button>
+        <button data-tab-panel="tab-1" data-tab-group="group-1" class="nav-link">Tab 1</button>
       </li>
 
       <li class="nav-item">
-        <button data-tabby-panel="tab-2" data-tabby-group="group-1" class="nav-link">Tab 2</button>
+        <button data-tab-panel="tab-2" data-tab-group="group-1" class="nav-link">Tab 2</button>
       </li>
 
       <li class="nav-item">
-        <button data-tabby-panel="tab-3" data-tabby-group="group-1" class="nav-link">Tab 3</button>
+        <button data-tab-panel="tab-3" data-tab-group="group-1" class="nav-link">Tab 3</button>
       </li>
     </ul>
 
     <div>
-      <button class="card" data-tabby-panel="tab-1" data-tabby-group="group-1">Tab 1</button>
+      <button class="card" data-tab-panel="tab-1" data-tab-group="group-1">Tab 1</button>
 
       <div id="tab-1">
         <p>
@@ -38,7 +38,7 @@
         </p>
       </div>
 
-      <button class="card" data-tabby-panel="tab-2" data-tabby-group="group-1">Tab 2</button>
+      <button class="card" data-tab-panel="tab-2" data-tab-group="group-1">Tab 2</button>
 
       <div id="tab-2">
         <p>
@@ -46,7 +46,7 @@
         </p>
       </div>
 
-      <button class="card" data-tabby-panel="tab-3" data-tabby-group="group-1">Tab 3</button>
+      <button class="card" data-tab-panel="tab-3" data-tab-group="group-1">Tab 3</button>
 
       <div id="tab-3">
         <p>
