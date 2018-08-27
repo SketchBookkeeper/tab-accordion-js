@@ -9,20 +9,20 @@ Example Markup
 ```html
 <ul class="nav nav-tabs" role="tablist">
   <li class="nav-item">
-    <button data-tabby-panel="tab-1" data-tabby-group="group-1" class="nav-link">Tab 1</button>
+    <button data-tab-panel="tab-1" data-tab-group="group-1" class="nav-link">Tab 1</button>
   </li>
 
   <li class="nav-item">
-    <button data-tabby-panel="tab-2" data-tabby-group="group-1" class="nav-link">Tab 2</button>
+    <button data-tab-panel="tab-2" data-tab-group="group-1" class="nav-link">Tab 2</button>
   </li>
 
   <li class="nav-item">
-    <button data-tabby-panel="tab-3" data-tabby-group="group-1" class="nav-link">Tab 3</button>
+    <button data-tab-panel="tab-3" data-tab-group="group-1" class="nav-link">Tab 3</button>
   </li>
 </ul>
 
 <div>
-  <button class="card" data-tabby-panel="tab-1" data-tabby-group="group-1">Accordion 1</button>
+  <button class="card" data-tab-panel="tab-1" data-tab-group="group-1">Accordion 1</button>
 
   <div id="tab-1">
     <h2>Panel 1</h2>
@@ -35,7 +35,7 @@ Example Markup
     </p>
   </div>
 
-  <button class="card" data-tabby-panel="tab-2" data-tabby-group="group-1">Accordion 2</button>
+  <button class="card" data-tab-panel="tab-2" data-tab-group="group-1">Accordion 2</button>
 
   <div id="tab-2">
     <p>
@@ -43,7 +43,7 @@ Example Markup
     </p>
   </div>
 
-  <button class="card" data-tabby-panel="tab-3" data-tabby-group="group-1">Accordion 3</button>
+  <button class="card" data-tab-panel="tab-3" data-tab-group="group-1">Accordion 3</button>
 
   <div id="tab-3">
     <p>
@@ -58,24 +58,24 @@ Call the `TabAccordions` in your JS.
 new TabAccordions();
 ```
 
-`TabAccordions` will search the DOM for any elements (preferably `button`s) with `data-tabby-group` and group those together as a tab/accordion groups. These element also need the `data-tabby-panel` attribute to link that trigger to a panel. This is done through passing the `id` of the panel to `data-tabby-panel`.
+`TabAccordions` will search the DOM for any elements (preferably `button`s) with `data-tab-group` and group those together as a tab/accordion groups. These element also need the `data-tab-panel` attribute to link that trigger to a panel. This is done through passing the `id` of the panel to `data-tab-panel`.
 
-By default the first elements found with a given `data-tabby-panel` will be grouped as tabs and the latter as accordions. This behavior can be overridden by assigning a trigger a type, 'tab' or 'accordion'; with `data-tabby-trigger-type`.
+By default the first elements found with a given `data-tab-panel` will be grouped as tabs and the latter as accordions. This behavior can be overridden by assigning a trigger a type, 'tab' or 'accordion'; with `data-tab-trigger-type`.
 
 ## Customizing Tabs
 
-Individual tab groups can be customized by passing options to `data-tabby-group-<your-group-name>` or by creating a new instance of `TabAccordion`.
+Individual tab groups can be customized by passing options to `data-tab-group-<your-group-name>` or by creating a new instance of `TabAccordion`.
 
 ### As a data attribute
 
-Pass the options as JSON to `data-tabby-group-<your-group-name>`. It doesn't matter which element you use for this, but using a wrapping element makes the most sense.
+Pass the options as JSON to `data-tab-group-<your-group-name>`. It doesn't matter which element you use for this, but using a wrapping element makes the most sense.
 
 Review the example below, notice the use of single quotes.
 
 ```html
-<ul data-tabby-group-my-tabs='{ "breakpoint" : 1040 }'>
+<ul data-tab-group-my-tabs='{ "breakpoint" : 1040 }'>
   <il>
-    <button data-tabby-panel="some-panel" data-tabby-group="my-tabs">Trigger</button>
+    <button data-tab-panel="some-panel" data-tab-group="my-tabs">Trigger</button>
   </il>
 </ul>
 ```
