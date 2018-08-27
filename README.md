@@ -74,9 +74,9 @@ Review the example below, notice the use of single quotes.
 
 ```html
 <ul data-tab-group-my-tabs='{ "breakpoint" : 1040 }'>
-  <il>
+  <li>
     <button data-tab-panel="some-panel" data-tab-group="my-tabs">Trigger</button>
-  </il>
+  </li>
 </ul>
 ```
 
