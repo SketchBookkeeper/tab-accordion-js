@@ -14,7 +14,7 @@ export const TabAccordion = (function () {
     hideTabs: true,
     hideAccordions: true,
     breakpoint: 960,
-    type: false
+    type: null
   }
 
   const BuildTabs = function (groupName, options) {

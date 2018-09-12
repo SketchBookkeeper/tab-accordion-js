@@ -1,7 +1,7 @@
 # tab-accordion-js
 > Easy to use tabs, accordions and tab-accordions
 
-The goal of this package is to help with the creation of tabs, accordions or the all powerful tab-accordion easy without dictating what the markup needs to be. I appreciate ready-made solutions like Foundation, but found that the predefined markup does not fit ever design I encountered. This package is meant to help quickly like tabs to panels while adding the needed ARIA attributes to the tabs. Keep in mind it does not cover all ARIA attributes, such as adding role `tablist` to the element wrapping the tabs.
+The goal of this package is to help with the creation of tabs, accordions or the all powerful tab-accordion easy without dictating what the markup needs to be. I appreciate ready-made solutions like Foundation, but found that the predefined markup does not fit ever design I encountered. This package is meant to help quickly link tabs to panels while adding the needed ARIA attributes to the tabs. Keep in mind it does not cover all ARIA attributes, such as adding role `tablist` to the element wrapping the tabs.
 
 ## Basic Usage
 
