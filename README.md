@@ -1,7 +1,9 @@
 # tab-accordion-js
 > Easy to use tabs, accordions and tab-accordions
 
-The goal of this package is to help with the creation of tabs, accordions or the all powerful tab-accordion easy without dictating what the markup needs to be. I appreciate ready-made solutions like Foundation, but found that the predefined markup does not fit ever design I encountered. This package is meant to help quickly link tabs to panels while adding the needed ARIA attributes to the tabs. Keep in mind it does not cover all ARIA attributes, such as adding role `tablist` to the element wrapping the tabs.
+The goal of this package is to help with the creation of tabs, accordions or the all powerful tab-accordion easy without dictating what the markup needs to be. I appreciate ready-made solutions like Foundation, but found that the predefined markup does not fit ever design I encountered.
+
+This package is meant to help quickly link tabs to panels while adding the needed ARIA attributes to the tabs. To maintain flexibility, it does not cover all ARIA attributes, such as adding role `tablist` to the element wrapping the tabs.
 
 ## Basic Usage
 
@@ -99,4 +101,4 @@ new TabAccordion({
 | hideTabs | Boolean | true | Tab triggers will be hidden below breakpoint. |
 | hideAccordions | Boolean | true | Accordions trigger will be hidden above breakpoint. |
 | breakpoint | Integer | 960 | Point at which to switch from Accordions to Tabs. |
-| type | String Boolean | false | A type may be specified if you only need `tab` or `accordion` for the group. This will ignore the breakpoint. |
+| type | String Boolean | null | A type may be specified if you only need `tab` or `accordion` for the group. This will ignore the breakpoint. |
